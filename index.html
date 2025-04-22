@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="sd">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لطيف جي ٻولي</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Ajrak Border -->
+    <div class="ajrak-border"></div>
+    
+    <!-- Background Elements -->
+    <div class="background-elements">
+        <div class="floating-letters"></div>
+    </div>
+
+    <!-- Welcome Page -->
+    <div id="welcome-page" class="page active">
+        <div class="welcome-container">
+            <h1 class="greeting">ڀلي ڪري آيا</h1>
+            <h2 class="language-name">لطيف جي ٻولي</h2>
+            
+            <div class="poet-portrait">
+                <div class="portrait-img"></div>
+            </div>
+            
+            <div class="verse-container">
+                <p class="verse">
+                    جي سڄڻ سان نيهه لڳو، تن جو ڪجھ به نه وڃي،<br>
+                    جيئن سمنڊ ۾ وهي وڃن، سدائين موتي ٿين
+                </p>
+            </div>
+            
+            <div class="buttons-container">
+                <button id="start-btn" class="btn primary-btn">هلايو</button>
+                <button id="docs-btn" class="btn secondary-btn">دستاويزات</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Editor Page -->
+    <div id="editor-page" class="page">
+        <div class="editor-container">
+            <div class="editor-header">
+                <h2>لطيف جي ٻولي - ڪوڊ ايڊيٽر</h2>
+                <button id="back-from-editor" class="btn back-btn">واپس</button>
+            </div>
+            
+            <div class="editor-layout">
+                <div class="code-panel">
+                    <div class="panel-header">ڪوڊ</div>
+                    <textarea id="code-editor" class="code-area" dir="rtl" placeholder="پنهنجو ڪوڊ هتي لکو..."></textarea>
+                </div>
+                
+                <div class="output-panel">
+                    <div class="panel-header">نتيجو</div>
+                    <div id="output-console" class="output-area" dir="rtl"></div>
+                </div>
+            </div>
+            
+            <div class="editor-controls">
+                <button id="run-btn" class="btn primary-btn">هلايو</button>
+                <button id="reset-btn" class="btn secondary-btn">ري سيٽ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Documentation Page -->
+    <div id="docs-page" class="page">
+        <div class="docs-container">
+            <div class="docs-header">
+                <h2>لطيف جي ٻولي - دستاويزات</h2>
+                <button id="back-from-docs" class="btn back-btn">واپس</button>
+            </div>
+            
+            <div class="docs-content" dir="rtl">
+                <h1>لطيف جي ٻولي — سنڌي پروگرامنگ ٻولي جي دستاويز</h1>
+                
+                <div class="docs-section">
+                    <p><strong>خالق:</strong> محمد مزمل</p>
+                    <p><strong>نگران:</strong> سر علي رضا ڀنگوار</p>
+                </div>
+                
+                <div class="docs-section">
+                    <h3>مقصد:</h3>
+                    <ul>
+                        <li>شاگردن لاءِ پروگرامنگ کي آسان بڻائڻ</li>
+                        <li>سنڌي ٻولي ۽ لطيف جي شاعري کي ٽيڪنيڪل دنيا سان جوڙڻ</li>
+                        <li>مقامي سطح تي پروگرامنگ سکڻ لاءِ نئون رستو ٺاهڻ</li>
+                    </ul>
+                </div>
+                
+                <div class="docs-section">
+                    <h3>بنيادي قاعدا (Syntax)</h3>
+                    <table class="syntax-table">
+                        <tr>
+                            <th>لفظ</th>
+                            <th>مطلب</th>
+                        </tr>
+                        <tr>
+                            <td>لک</td>
+                            <td>نئون ڦرڻو (variable) ٺاهڻ</td>
+                        </tr>
+                        <tr>
+                            <td>عددي</td>
+                            <td>انگ (Integer) قسم</td>
+                        </tr>
+                        <tr>
+                            <td>لڱا</td>
+                            <td>لکت (String) قسم</td>
+                        </tr>
+                        <tr>
+                            <td>جيڪڏ</td>
+                            <td>جيڪڏھن شرط (if)</td>
+                        </tr>
+                        <tr>
+                            <td>نه</td>
+                            <td>نه ته (else)</td>
+                        </tr>
+                        <tr>
+                            <td>ورجاءُ</td>
+                            <td>ورجاٸي (while loop)</td>
+                        </tr>
+                        <tr>
+                            <td>لکيوَ</td>
+                            <td>نتيجو ڏيکارڻ</td>
+                        </tr>
+                        <tr>
+                            <td>پُڇو</td>
+                            <td>يوزر کان معلومات وٺڻ</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="docs-section">
+                    <h3>مثالي پروگرام:</h3>
+                    
+                    <div class="example">
+                        <h4>1. عددي ڦرڻو ۽ نتيجو ڏيکارڻ:</h4>
+                        <div class="code-example">
+                            <pre>لک عددي عمر = 22
+لکيوَ عمر</pre>
+                            <div class="example-output">نتيجو: 22</div>
+                        </div>
+                    </div>
+                    
+                    <div class="example">
+                        <h4>2. لڱا ڦرڻو ۽ لکڻ:</h4>
+                        <div class="code-example">
+                            <pre>لک لڱا نالو = "مزمل"
+لکيوَ نالو</pre>
+                            <div class="example-output">نتيجو: مزمل</div>
+                        </div>
+                    </div>
+                    
+                    <div class="example">
+                        <h4>3. جيڪڏھن ۽ نه ته شرط:</h4>
+                        <div class="code-example">
+                            <pre>لک عددي عمر = 18
+جيڪڏ عمر >= 18
+  لکيوَ "توهان بالغ آهيو"
+نه
+  لکيوَ "توهان نابالغ آهيو"</pre>
+                            <div class="example-output">ممڪن نتيجو: توهان بالغ آهيو</div>
+                        </div>
+                    </div>
+                    
+                    <div class="example">
+                        <h4>4. ورجاءُ لوپ جو مثال:</h4>
+                        <div class="code-example">
+                            <pre>لک عددي ڳڻپ = 1
+ورجاءُ ڳڻپ <= 5
+  لکيوَ ڳڻپ
+  ڳڻپ = ڳڻپ + 1</pre>
+                            <div class="example-output">نتيجو:
+1
+2
+3
+4
+5</div>
+                        </div>
+                    </div>
+                    
+                    <div class="example">
+                        <h4>5. پُڇو: يوزر کان معلومات وٺڻ:</h4>
+                        <div class="code-example">
+                            <pre>لک لڱا نالو
+پُڇو "پنھنجو نالو داخل ڪريو:"
+نالو
+لکيوَ "ڀليڪار " + نالو</pre>
+                            <div class="example-output">ممڪن نتيجو:
+پنھنجو نالو داخل ڪريو: مزمل
+ڀليڪار مزمل</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="docs-section">
+                    <h3>خاص خوبيون:</h3>
+                    <ul>
+                        <li>سادي سنڌي قاعدي</li>
+                        <li>لطيف جي ٻوليءَ مان لفظ</li>
+                        <li>يوزر لاءِ ڏسڻ ۽ سمجهڻ ۾ آسان</li>
+                        <li>مقامي ٻولي ۾ لوپ، شرط، داخل، ظاهر وغيره</li>
+                    </ul>
+                </div>
+                
+                <div class="docs-section">
+                    <h3>اڳتي جا قدم:</h3>
+                    <ul>
+                        <li>نوان قاعدا شامل ڪرڻ (Array، Function)</li>
+                        <li>ويب IDE جي تياري</li>
+                        <li>ويب اي پي آءِ تي مبني سنڀال</li>
+                        <li>شاعريءَ تي ٻڌل Syntax</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
