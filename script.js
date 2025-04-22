@@ -77,49 +77,50 @@ function throttle(func, limit) {
   }
 }
 
+// Optimized floating letters creation - reduced count and complexity
 function createFloatingLetters() {
-  // Early exit for ultra-low performance mode (e.g. detect device memory)
-  if (navigator.deviceMemory && navigator.deviceMemory < 1) return;
+  // Clear old letters efficiently
+  while (floatingLetters.firstChild) {
+    floatingLetters.removeChild(floatingLetters.firstChild);
+  }
 
-  floatingLetters.innerHTML = "";
-
-  const isMobile = window.innerWidth < 768;
-  const letterCount = isMobile ? 10 : 20; // Lowered further for ultra-low-end
+  // Always show 4 to 5 letters max
+  const letterCount = Math.floor(Math.random() * 11) + 10;
+  // Use document fragment for batch insertion
+  const fragment = document.createDocumentFragment();
 
   const colors = [
-    "rgba(26, 105, 133, 0.6)",  // ajrak-blue
-    "rgba(214, 65, 97, 0.6)",   // ajrak-red
-    "rgba(139, 0, 0, 0.6)",     // ajrak-maroon
-    "rgba(233, 180, 76, 0.6)"   // ajrak-gold
+    "rgba(26, 105, 133, 0.5)",   // ajrak-blue
+    "rgba(214, 65, 97, 0.5)",    // ajrak-red
+    "rgba(139, 0, 0, 0.5)",      // ajrak-maroon
+    "rgba(233, 180, 76, 0.5)",   // ajrak-gold
   ];
-
-  const fragment = document.createDocumentFragment();
 
   for (let i = 0; i < letterCount; i++) {
     const letter = document.createElement("div");
     const randomLetter = sindhiLetters[Math.floor(Math.random() * sindhiLetters.length)];
+
+    // Letter setup
     letter.className = "floating-letter";
     letter.textContent = randomLetter;
 
-    // Use translate3d directly for smoother GPU-accelerated transform
-    const x = Math.random() * 100;
-    const y = Math.random() * 100;
-    const z = Math.random() * 200 - 100;
+    // Simple, fixed depth and animation (less GPU load)
+    const xPos = Math.random() * 90 + 5; // Avoid edges
+    const yPos = Math.random() * 90 + 5;
+    const fontSize =  Math.random() * 4 + 0.9; // Smaller = faster
 
-    const size = Math.max(0.8, (z + 100) / 30); // Smaller baseline font
-
+    // Minimal styles for smoother performance
     letter.style.cssText = `
-    position: absolute;
-    left: ${xPos}%;
-    top: ${yPos}%;
-    font-size: ${size.toFixed(2)}rem;
-    color: ${color};
-    transform: translate3d(0, 0, ${zPos}px);
-    animation: float3D ${duration.toFixed(2)}s ease-in-out infinite;
-    animation-delay: ${delay.toFixed(2)}s;
-    pointer-events: none;
-    font-family: 'MB Sania', 'Jameel Noori Nastaleeq', serif;
-  `;
+      position: absolute;
+      left: ${xPos.toFixed(1)}%;
+      top: ${yPos.toFixed(1)}%;
+      font-size: ${fontSize.toFixed(2)}rem;
+      color: ${colors[Math.floor(Math.random() * colors.length)]};
+      font-family: 'MB Sania', sans-serif;
+      animation: float2D ${8 + Math.random() * 4}s ease-in-out infinite;
+      opacity: 0.8;
+      pointer-events: none;
+    `;
 
     fragment.appendChild(letter);
   }
