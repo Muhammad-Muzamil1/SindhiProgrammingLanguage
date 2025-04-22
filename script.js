@@ -12,7 +12,7 @@ const codeEditor = document.getElementById("code-editor")
 const outputConsole = document.getElementById("output-console")
 const floatingLetters = document.querySelector(".floating-letters")
 
-// Create floating Sindhi letters in 3D space
+// Create floating Sindhi letters in 3D space - OPTIMIZED
 const sindhiLetters = [
   "ا",
   "ب",
@@ -63,34 +63,51 @@ const sindhiLetters = [
   "ي",
 ]
 
+// Throttle function to limit how often a function can be called
+function throttle(func, limit) {
+  let inThrottle
+  return function () {
+    const args = arguments
+    
+    if (!inThrottle) {
+      func.apply(this, args)
+      inThrottle = true
+      setTimeout(() => (inThrottle = false), limit)
+    }
+  }
+}
+
+// Optimized floating letters creation - reduced count and complexity
 function createFloatingLetters() {
   // Clear existing letters
   floatingLetters.innerHTML = ""
 
+  // Check if we're on mobile - if so, create fewer letters
+  const isMobile = window.innerWidth < 768
+  const letterCount = isMobile ? 15 : 30 // Reduced from 80 to 30 (or 15 on mobile)
+
+  // Create document fragment for better performance
+  const fragment = document.createDocumentFragment()
+
   // Create 3D floating letters
-  for (let i = 0; i < 80; i++) {
+  for (let i = 0; i < letterCount; i++) {
     const letter = document.createElement("div")
     const randomLetter = sindhiLetters[Math.floor(Math.random() * sindhiLetters.length)]
 
     letter.className = "floating-letter"
     letter.textContent = randomLetter
 
-    // Random 3D position
+    // Random 3D position - simplified
     const xPos = Math.random() * 100
     const yPos = Math.random() * 100
-    const zPos = Math.random() * 500 - 250
+    const zPos = Math.random() * 300 - 150 // Reduced z-range
 
     // Random size based on z-position (perspective effect)
-    const size = Math.max(1, (zPos + 250) / 25)
+    const size = Math.max(1, (zPos + 150) / 25)
 
-    // Random rotation
-    const rotX = Math.random() * 360
-    const rotY = Math.random() * 360
-    const rotZ = Math.random() * 360
-
-    // Random animation duration and delay
-    const duration = 10 + Math.random() * 20
-    const delay = Math.random() * -20
+    // Simplified animation with fewer properties
+    const duration = 15 + Math.random() * 10 // Longer duration = less CPU usage
+    const delay = Math.random() * -10
 
     // Random color from Ajrak theme
     const colors = [
@@ -105,14 +122,26 @@ function createFloatingLetters() {
     letter.style.top = `${yPos}%`
     letter.style.fontSize = `${size}rem`
     letter.style.color = color
-    letter.style.textShadow = `0 0 3px ${color}`
-  letter.style.transform = `translateZ(${zPos}px) rotateX(${rotX}deg) rotateY(${rotY}deg) rotateZ(${rotZ}deg)`
+
+    // Simplified transform with fewer properties
+    letter.style.transform = `translateZ(${zPos}px)`
     letter.style.animationDuration = `${duration}s`
     letter.style.animationDelay = `${delay}s`
 
-    floatingLetters.appendChild(letter)
+    fragment.appendChild(letter)
   }
+
+  floatingLetters.appendChild(fragment)
 }
+
+// Throttled version of createFloatingLetters to prevent performance issues
+const throttledCreateFloatingLetters = throttle(createFloatingLetters, 1000)
+
+// Initialize floating letters
+createFloatingLetters()
+
+// Recreate floating letters on window resize, but throttled
+window.addEventListener("resize", throttledCreateFloatingLetters)
 
 // Create portrait with Ajrak pattern
 function createPortrait() {
@@ -127,13 +156,10 @@ function createPortrait() {
 }
 
 // Initialize floating letters and portrait
-createFloatingLetters()
 createPortrait()
 
 // Recreate floating letters on window resize
-window.addEventListener("resize", createFloatingLetters)
-
-// Navigation Functions
+// Navigation Functions - Optimized
 function showPage(page) {
   // Hide all pages with animation
   document.querySelectorAll(".page").forEach((p) => {
@@ -150,16 +176,18 @@ function showPage(page) {
           page.style.opacity = "1"
           page.style.transform = "translateY(0)"
 
-          // 👉 Show floating letters only on welcomePage
+          // Show floating letters only on welcomePage
           if (page === welcomePage) {
             floatingLetters.style.display = "block"
-            createFloatingLetters() // Optional: recreate for fresh look
+            // Only recreate if they don't exist
+            if (floatingLetters.children.length === 0) {
+              createFloatingLetters()
+            }
           } else {
             floatingLetters.style.display = "none"
           }
-
         }, 50)
-      }, 400)
+      }, 300) // Reduced from 400ms
     }
   })
 
@@ -170,7 +198,7 @@ function showPage(page) {
       page.style.opacity = "1"
       page.style.transform = "translateY(0)"
 
-      // 👉 Initial load case
+      // Initial load case
       if (page === welcomePage) {
         floatingLetters.style.display = "block"
       } else {
@@ -180,9 +208,7 @@ function showPage(page) {
   }
 }
 
-
-
-// Add 3D effect to buttons
+// Simplified 3D effect for buttons - using CSS transforms instead of JS
 function add3DEffectToButtons() {
   const buttons = document.querySelectorAll(".btn")
 
@@ -195,10 +221,11 @@ function add3DEffectToButtons() {
       const centerX = rect.width / 2
       const centerY = rect.height / 2
 
-      const angleX = (y - centerY) / 10
-      const angleY = (centerX - x) / 10
+      // Reduced angle for less extreme effect
+      const angleX = (y - centerY) / 15
+      const angleY = (centerX - x) / 15
 
-      btn.style.transform = `perspective(500px) rotateX(${angleX}deg) rotateY(${angleY}deg) translateZ(10px)`
+      btn.style.transform = `perspective(500px) rotateX(${angleX}deg) rotateY(${angleY}deg) translateZ(5px)`
     })
 
     btn.addEventListener("mouseleave", () => {
@@ -247,7 +274,7 @@ resetBtn.addEventListener("click", () => {
   outputConsole.innerHTML = ""
 })
 
-// Simple interpreter function (simulation)
+// Simple interpreter function (simulation) - unchanged
 function interpretCode(code) {
   let output = ""
   const lines = code.split("\n")
@@ -369,3 +396,51 @@ add3DEffectToButtons()
 
 // Initialize the app
 showPage(welcomePage)
+
+// Add event listener for page visibility to pause animations when tab is not visible
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    // Page is hidden, pause intensive animations
+    document.querySelectorAll(".floating-letter").forEach((letter) => {
+      letter.style.animationPlayState = "paused"
+    })
+  } else {
+    // Page is visible again, resume animations
+    document.querySelectorAll(".floating-letter").forEach((letter) => {
+      letter.style.animationPlayState = "running"
+    })
+  }
+})
+
+// Use requestAnimationFrame for smoother animations
+let lastTime = 0
+function animateLetters(timestamp) {
+  if (!lastTime) lastTime = timestamp
+  const elapsed = timestamp - lastTime
+
+  // Only update if enough time has passed (60fps = ~16ms)
+  if (elapsed > 16) {
+    lastTime = timestamp
+
+    // Only animate if welcome page is active and visible
+    if (welcomePage.classList.contains("active") && !document.hidden) {
+      document.querySelectorAll(".floating-letter").forEach((letter) => {
+        // Get current transform
+        const transform = letter.style.transform
+        // Extract Z value
+        const zMatch = transform.match(/translateZ$$([^)]+)$$/)
+        if (zMatch && zMatch[1]) {
+          const currentZ = Number.parseFloat(zMatch[1])
+          // Slowly update Z position for subtle movement
+          const newZ = currentZ + Math.sin(timestamp / 1000) * 0.5
+          letter.style.transform = transform.replace(/translateZ$$[^)]+$$/, `translateZ(${newZ}px)`)
+        }
+      })
+    }
+  }
+
+  requestAnimationFrame(animateLetters)
+}
+
+// Start the animation loop
+requestAnimationFrame(animateLetters)

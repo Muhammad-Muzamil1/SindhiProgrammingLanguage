@@ -5,14 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لطيف جي ٻولي</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- Preload critical assets -->
+    <link rel="preload" href="./assets/fonts/mb%20sania.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="./assets/images/sindhLogo.JPG" as="image">
 </head>
 <body>
     <!-- Ajrak Border -->
     <div class="ajrak-border"></div>
     
-    <!-- Background Elements -->
+    <!-- Background Elements - Reduced number of elements -->
     <div class="background-elements">
-        <div class="floating-letters"></div>
+        <div class="floating-letters" id="floating-letters"></div>
     </div>
 
     <!-- Welcome Page -->
@@ -22,7 +25,7 @@
             <h2 class="language-name">لطيف جي ٻولي</h2>
             
             <div class="poet-portrait">
-                <img src="./assets/images/sindhLogo.JPG" alt="Latif Logo" class="portrait-img" />
+                <img src="./assets/images/sindhLogo.JPG" alt="Latif Logo" class="portrait-img" loading="eager" width="300" height="300" />
             </div>
             
             <div class="verse-container">
@@ -219,6 +222,6 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>
