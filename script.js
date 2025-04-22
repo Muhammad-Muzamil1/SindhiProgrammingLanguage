@@ -77,62 +77,56 @@ function throttle(func, limit) {
   }
 }
 
-// Optimized floating letters creation - reduced count and complexity
 function createFloatingLetters() {
-  // Clear existing letters
-  floatingLetters.innerHTML = ""
+  // Early exit for ultra-low performance mode (e.g. detect device memory)
+  if (navigator.deviceMemory && navigator.deviceMemory < 1) return;
 
-  // Check if we're on mobile - if so, create fewer letters
-  const isMobile = window.innerWidth < 768
-  const letterCount = isMobile ? 15 : 30 // Reduced from 80 to 30 (or 15 on mobile)
+  floatingLetters.innerHTML = "";
 
-  // Create document fragment for better performance
-  const fragment = document.createDocumentFragment()
+  const isMobile = window.innerWidth < 768;
+  const letterCount = isMobile ? 10 : 20; // Lowered further for ultra-low-end
 
-  // Create 3D floating letters
+  const colors = [
+    "rgba(26, 105, 133, 0.6)",  // ajrak-blue
+    "rgba(214, 65, 97, 0.6)",   // ajrak-red
+    "rgba(139, 0, 0, 0.6)",     // ajrak-maroon
+    "rgba(233, 180, 76, 0.6)"   // ajrak-gold
+  ];
+
+  const fragment = document.createDocumentFragment();
+
   for (let i = 0; i < letterCount; i++) {
-    const letter = document.createElement("div")
-    const randomLetter = sindhiLetters[Math.floor(Math.random() * sindhiLetters.length)]
+    const letter = document.createElement("div");
+    const randomLetter = sindhiLetters[Math.floor(Math.random() * sindhiLetters.length)];
+    letter.className = "floating-letter";
+    letter.textContent = randomLetter;
 
-    letter.className = "floating-letter"
-    letter.textContent = randomLetter
+    // Use translate3d directly for smoother GPU-accelerated transform
+    const x = Math.random() * 100;
+    const y = Math.random() * 100;
+    const z = Math.random() * 200 - 100;
 
-    // Random 3D position - simplified
-    const xPos = Math.random() * 100
-    const yPos = Math.random() * 100
-    const zPos = Math.random() * 300 - 150 // Reduced z-range
+    const size = Math.max(0.8, (z + 100) / 30); // Smaller baseline font
 
-    // Random size based on z-position (perspective effect)
-    const size = Math.max(1, (zPos + 150) / 25)
+    letter.style.cssText = `
+    position: absolute;
+    left: ${xPos}%;
+    top: ${yPos}%;
+    font-size: ${size.toFixed(2)}rem;
+    color: ${color};
+    transform: translate3d(0, 0, ${zPos}px);
+    animation: float3D ${duration.toFixed(2)}s ease-in-out infinite;
+    animation-delay: ${delay.toFixed(2)}s;
+    pointer-events: none;
+    font-family: 'MB Sania', 'Jameel Noori Nastaleeq', serif;
+  `;
 
-    // Simplified animation with fewer properties
-    const duration = 15 + Math.random() * 10 // Longer duration = less CPU usage
-    const delay = Math.random() * -10
-
-    // Random color from Ajrak theme
-    const colors = [
-      "rgba(26, 105, 133, 0.7)", // ajrak-blue
-      "rgba(214, 65, 97, 0.7)", // ajrak-red
-      "rgba(139, 0, 0, 0.7)", // ajrak-maroon
-      "rgba(233, 180, 76, 0.7)", // ajrak-gold
-    ]
-    const color = colors[Math.floor(Math.random() * colors.length)]
-
-    letter.style.left = `${xPos}%`
-    letter.style.top = `${yPos}%`
-    letter.style.fontSize = `${size}rem`
-    letter.style.color = color
-
-    // Simplified transform with fewer properties
-    letter.style.transform = `translateZ(${zPos}px)`
-    letter.style.animationDuration = `${duration}s`
-    letter.style.animationDelay = `${delay}s`
-
-    fragment.appendChild(letter)
+    fragment.appendChild(letter);
   }
 
-  floatingLetters.appendChild(fragment)
+  floatingLetters.appendChild(fragment);
 }
+
 
 // Throttled version of createFloatingLetters to prevent performance issues
 const throttledCreateFloatingLetters = throttle(createFloatingLetters, 1000)

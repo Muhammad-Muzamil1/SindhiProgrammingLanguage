@@ -103,12 +103,9 @@ body::after {
 
 .floating-letter {
   position: absolute;
-  font-size: 2rem;
-  color: rgba(255, 255, 255, 0.3);
-  text-shadow: 0 0 5px rgba(233, 180, 76, 0.5);
-  transform-style: preserve-3d;
-  animation: float3D 20s ease-in-out infinite;
-  will-change: transform; /* Performance hint */
+  font-family: 'MB Sania', sans-serif;
+  pointer-events: none;
+  will-change: transform, opacity;
 }
 
 /* Simplified background for editor and docs pages */
@@ -690,6 +687,7 @@ body::after {
     display: none;
   }
 }
+
 
 @media (max-width: 576px) {
   .page {
