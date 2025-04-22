@@ -79,53 +79,51 @@ function throttle(func, limit) {
 
 // Optimized floating letters creation - reduced count and complexity
 function createFloatingLetters() {
-  // Clear old letters efficiently
-  while (floatingLetters.firstChild) {
-    floatingLetters.removeChild(floatingLetters.firstChild);
-  }
+  floatingLetters.innerHTML = ""
 
-  // Always show 4 to 5 letters max
-  const letterCount = Math.floor(Math.random() * 11) + 10;
-  // Use document fragment for batch insertion
-  const fragment = document.createDocumentFragment();
+  const isMobile = window.innerWidth <= 768
+  const letterCount = isMobile ? 10 : 20 // Safer for low-end devices
 
-  const colors = [
-    "rgba(26, 105, 133, 0.5)",   // ajrak-blue
-    "rgba(214, 65, 97, 0.5)",    // ajrak-red
-    "rgba(139, 0, 0, 0.5)",      // ajrak-maroon
-    "rgba(233, 180, 76, 0.5)",   // ajrak-gold
-  ];
+  const fragment = document.createDocumentFragment()
 
   for (let i = 0; i < letterCount; i++) {
-    const letter = document.createElement("div");
-    const randomLetter = sindhiLetters[Math.floor(Math.random() * sindhiLetters.length)];
+    const letter = document.createElement("div")
+    const randomLetter = sindhiLetters[Math.floor(Math.random() * sindhiLetters.length)]
 
-    // Letter setup
-    letter.className = "floating-letter";
-    letter.textContent = randomLetter;
+    letter.className = "floating-letter"
+    letter.textContent = randomLetter
 
-    // Simple, fixed depth and animation (less GPU load)
-    const xPos = Math.random() * 90 + 5; // Avoid edges
-    const yPos = Math.random() * 90 + 5;
-    const fontSize =  Math.random() * 4 + 0.9; // Smaller = faster
+    const xPos = Math.random() * 100
+    const yPos = Math.random() * 100
+    const zPos = isMobile ? 0 : (Math.random() * 300 - 150) // Disable z transform on mobile
 
-    // Minimal styles for smoother performance
-    letter.style.cssText = `
-      position: absolute;
-      left: ${xPos.toFixed(1)}%;
-      top: ${yPos.toFixed(1)}%;
-      font-size: ${fontSize.toFixed(2)}rem;
-      color: ${colors[Math.floor(Math.random() * colors.length)]};
-      font-family: 'MB Sania', sans-serif;
-      animation: float2D ${8 + Math.random() * 4}s ease-in-out infinite;
-      opacity: 0.8;
-      pointer-events: none;
-    `;
+    const size = isMobile
+      ? Math.random() * 1.5 + 1.2 // Smaller sizes on mobile
+      : Math.max(1, (zPos + 150) / 25)
 
-    fragment.appendChild(letter);
+    const duration = 10 + Math.random() * 5
+    const delay = Math.random() * -5
+
+    const colors = [
+      "rgba(26, 105, 133, 0.7)",
+      "rgba(214, 65, 97, 0.7)",
+      "rgba(139, 0, 0, 0.7)",
+      "rgba(233, 180, 76, 0.7)",
+    ]
+    const color = colors[Math.floor(Math.random() * colors.length)]
+
+    letter.style.left = `${xPos}%`
+    letter.style.top = `${yPos}%`
+    letter.style.fontSize = `${size}rem`
+    letter.style.color = color
+    letter.style.transform = isMobile ? "none" : `translateZ(${zPos}px)`
+    letter.style.animationDuration = `${duration}s`
+    letter.style.animationDelay = `${delay}s`
+
+    fragment.appendChild(letter)
   }
 
-  floatingLetters.appendChild(fragment);
+  floatingLetters.appendChild(fragment)
 }
 
 
