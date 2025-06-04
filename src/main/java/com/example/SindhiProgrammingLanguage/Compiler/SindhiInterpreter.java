@@ -71,39 +71,37 @@ public class SindhiInterpreter {
 
 
     private String declaration() {
-        consume(SindhiToken.Type.DECLARE); // 'لک'
-
-        // Peek next token without consuming
-        if (pos >= tokens.size()) {
-            throw new RuntimeException("Expected type after لک");
-        }
-
-        SindhiToken typeToken = tokens.get(pos);
-        if (!typeToken.is(SindhiToken.Type.NUMERIC_TYPE) &&
-                !typeToken.is(SindhiToken.Type.STRING_TYPE)) {
-            throw new RuntimeException("Expected type (عددي or لکت) after لک, but got " +
-                    typeToken.getType() + " '" + typeToken.getValue() + "'");
-        }
-        pos++; // Consume the type token
-
+        consume(SindhiToken.Type.DECLARE);
+        SindhiToken typeToken = consumeType();
         String varName = consume(SindhiToken.Type.IDENTIFIER).getValue();
         consume(SindhiToken.Type.OPERATOR, "=");
         Object value = evaluateExpression();
 
         // Type checking
-        if (typeToken.is(SindhiToken.Type.NUMERIC_TYPE) && !(value instanceof Integer)) {
-            try {
-                value = Integer.parseInt(value.toString());
-            } catch (NumberFormatException e) {
-                throw new RuntimeException("Expected integer for variable '" + varName + "'");
+        if (typeToken.is(SindhiToken.Type.NUMERIC_TYPE)) {
+            if (!(value instanceof Integer)) {
+                try {
+                    value = Integer.parseInt(value.toString());
+                } catch (NumberFormatException e) {
+                    throw new RuntimeException("Expected number for variable '" + varName + "'");
+                }
             }
-        } else if (typeToken.is(SindhiToken.Type.STRING_TYPE)) {
+        }
+        else {
             value = value.toString();
         }
 
         variables.put(varName, value);
         return "";
     }
+
+    private SindhiToken consumeType() {
+        if (match(SindhiToken.Type.NUMERIC_TYPE) || match(SindhiToken.Type.STRING_TYPE)) {
+            return consume(peek().getType());
+        }
+        throw new RuntimeException("Expected type (عددي or لکت)");
+    }
+
 
     private String print() {
         consume(SindhiToken.Type.PRINT); // consume 'لکيوَ'
@@ -248,12 +246,28 @@ public class SindhiInterpreter {
         consume(SindhiToken.Type.IF);
         boolean condition = evaluateBooleanCondition();
 
+        String thenResult = "";
+        String elseResult = "";
+
+        // THEN block
         if (condition) {
-            return statement();  // Could be single statement or block
-        } else {
-            skipStatement();
-            return handleElseBlocks();
+            thenResult = statement();
+            // Skip ELSE if present
+            if (match(SindhiToken.Type.ELSE)) {
+                consume(SindhiToken.Type.ELSE);
+                skipStatement();
+            }
         }
+        // ELSE block
+        else {
+            skipStatement();
+            if (match(SindhiToken.Type.ELSE)) {
+                consume(SindhiToken.Type.ELSE);
+                elseResult = statement();
+            }
+        }
+
+        return condition ? thenResult : elseResult;
     }
     private String handleElseBlocks() {
         if (match(SindhiToken.Type.ELSE_IF)) {
