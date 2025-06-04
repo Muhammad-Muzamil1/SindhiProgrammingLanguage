@@ -1,3 +1,4 @@
+// ✅ FIXED SindhiLexer.java
 package com.example.SindhiProgrammingLanguage.Compiler;
 
 import java.util.*;
@@ -5,78 +6,70 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SindhiLexer {
-<<<<<<< HEAD
-    // Update the keyword map with proper ordering
-=======
->>>>>>> b57bb0301f0bd1780e2dc7706533b340f1319d34
-    private static final Map<String, SindhiToken.Type> KEYWORDS = Map.ofEntries(
-            Map.entry("لکيوَ", SindhiToken.Type.PRINT),
-            Map.entry("جيڪڏ", SindhiToken.Type.IF),
-            Map.entry("ته", SindhiToken.Type.ELSE),
-<<<<<<< HEAD
-            Map.entry("جيستائين", SindhiToken.Type.WHILE),
-=======
-            Map.entry("ته جيڪڏ", SindhiToken.Type.ELSE_IF),  // New ELSE IF token
-            Map.entry("جيستائين", SindhiToken.Type.WHILE),
-            Map.entry("لک", SindhiToken.Type.DECLARE),
->>>>>>> b57bb0301f0bd1780e2dc7706533b340f1319d34
-            Map.entry("عددي", SindhiToken.Type.NUMERIC_TYPE),
-            Map.entry("لکت", SindhiToken.Type.STRING_TYPE),
-            Map.entry("ڪر", SindhiToken.Type.DO),
-            Map.entry("۽", SindhiToken.Type.AND_OPERATOR),
-            Map.entry("يا", SindhiToken.Type.OR_OPERATOR)
-    );
-    private boolean isSindhiKeyword(String text) {
-        return KEYWORDS.containsKey(text) ||
-                text.equals("لک"); // Handle لک separately
+    private static final Map<String, SindhiToken.Type> KEYWORDS;
+
+    static {
+        // Sort keywords by descending length to avoid partial match (e.g. لک vs لکيوَ)
+        Map<String, SindhiToken.Type> map = new LinkedHashMap<>();
+        map.put("لکيوَ", SindhiToken.Type.PRINT);
+        map.put("جيستائين", SindhiToken.Type.WHILE);
+        map.put("جيڪڏ", SindhiToken.Type.IF);
+        map.put("ته", SindhiToken.Type.ELSE);
+        map.put("عددي", SindhiToken.Type.NUMERIC_TYPE);
+        map.put("لکت", SindhiToken.Type.STRING_TYPE);
+        map.put("ڪر", SindhiToken.Type.DO);
+        map.put("۽", SindhiToken.Type.AND_OPERATOR);
+        map.put("يا", SindhiToken.Type.OR_OPERATOR);
+        KEYWORDS = Collections.unmodifiableMap(map);
     }
-    private static final Pattern TOKEN_PATTERN = Pattern.compile(
-<<<<<<< HEAD
-            "\\s*(?:" +
-                    "//[^\\n]*|" +                          // Comments
-                    "\"(?:\\\\[\"\\\\tnr]|[^\"\\\\])*\"|" + // Strings
-                    "لک(?!يوَ)|" +                          // DECLARE (not followed by يوَ)
-                    String.join("|", KEYWORDS.keySet()) + "|" +
-                    "\\d+|" +                               // Numbers
-                    "[{}]|" +                               // Braces
-                    "==|!=|<=|>=|[=<>+\\-*/%()]|" +        // Operators
-                    "[\\p{InArabic}a-zA-Z_][\\p{InArabic}a-zA-Z0-9_]*" + // Identifiers
-=======
-            "\\s*(" +
-                    "//[^\\n]*" + "|" +
-                    "\"(?:\\\\[\"\\\\tnr]|[^\"\\\\])*\"" + "|" +
-                    "ته\\s+جيڪڏ|" +  // ELSE IF as single token
-                    String.join("|", KEYWORDS.keySet()) + "|" +
-                    "\\d+" + "|" +
-                    // Add {} to operators
-                    "==|!=|<=|>=|[=<>+\\-*/%(){}]" + "|" +
-                    "[\\p{InArabic}a-zA-Z_][\\p{InArabic}a-zA-Z0-9_]*" +
->>>>>>> b57bb0301f0bd1780e2dc7706533b340f1319d34
-                    ")"
-    );
+
+    private static final Pattern TOKEN_PATTERN;
+
+    static {
+        // Build regex pattern dynamically
+        String keywordsPattern = String.join("|", KEYWORDS.keySet());
+        TOKEN_PATTERN = Pattern.compile(
+                "\\s*(?:" +
+                        "//[^\\n]*|" +                      // Comments
+                        "\\\"(?:\\\\[\\\"\\\\tnr]|[^\\\"\\\\])*\\\"|" + // Strings
+                        keywordsPattern + "|" +
+                        "لک(?!يوَ)|" +                        // DECLARE keyword with lookahead
+                        "\\d+|" +                            // Numbers
+                        "[{}]|" +                            // Braces
+                        "==|!=|<=|>=|[=<>+\\-*/%()]|" +     // Operators
+                        "[\\p{InArabic}a-zA-Z_][\\p{InArabic}a-zA-Z0-9_]*" + // Identifiers
+                        ")"
+        );
+    }
 
     public List<SindhiToken> tokenize(String input) throws SindhiLexerException {
         List<SindhiToken> tokens = new ArrayList<>();
         Matcher matcher = TOKEN_PATTERN.matcher(input);
-        int pos = 0;
         int line = 1;
         int lineStart = 0;
+        int lastMatchEnd = 0;
 
-        while (pos < input.length()) {
-            if (!matcher.find(pos) || matcher.start() != pos) {
-                throw new SindhiLexerException("Unexpected character at line " + line);
+        while (matcher.find()) {
+            if (matcher.start() != lastMatchEnd) {
+                throw new SindhiLexerException("Unrecognized token at line " + line + ", column " + (matcher.start() - lineStart + 1));
             }
 
-            String token = matcher.group();
-            int column = matcher.start() - lineStart + 1;
-
-            if (token.trim().isEmpty() || token.startsWith("//")) {
-                pos = matcher.end();
+            String tokenValue = matcher.group().trim();
+            if (tokenValue.isEmpty()) {
+                lastMatchEnd = matcher.end();
                 continue;
             }
 
-            tokens.add(createToken(token, line, column));
-            pos = matcher.end();
+            for (int i = lastMatchEnd; i < matcher.start(); i++) {
+                if (input.charAt(i) == '\n') {
+                    line++;
+                    lineStart = i + 1;
+                }
+            }
+
+            int column = matcher.start() - lineStart + 1;
+            tokens.add(createToken(tokenValue, line, column));
+            lastMatchEnd = matcher.end();
         }
 
         tokens.add(new SindhiToken(SindhiToken.Type.EOF, "", line, input.length() - lineStart + 1));
@@ -94,8 +87,13 @@ public class SindhiLexer {
             return new SindhiToken(SindhiToken.Type.NUMBER, value, line, column);
         }
         if (value.startsWith("\"")) {
-            return new SindhiToken(SindhiToken.Type.STRING,
-                    value.substring(1, value.length()-1), line, column);
+            String raw = value.substring(1, value.length() - 1);
+            String decoded = raw
+                    .replace("\\\\", "\\")
+                    .replace("\\\"", "\"")
+                    .replace("\\n", "\n")
+                    .replace("\\t", "\t");
+            return new SindhiToken(SindhiToken.Type.STRING, decoded, line, column);
         }
         if (value.matches("[=<>+\\-*/%(){}]|==|!=|<=|>=")) {
             return new SindhiToken(SindhiToken.Type.OPERATOR, value, line, column);
@@ -103,9 +101,9 @@ public class SindhiLexer {
         return new SindhiToken(SindhiToken.Type.IDENTIFIER, value, line, column);
     }
 
-class SindhiLexerException extends Exception {
-    public SindhiLexerException(String message) {
-        super(message);
+    public static class SindhiLexerException extends Exception {
+        public SindhiLexerException(String message) {
+            super(message);
+        }
     }
-}
 }
