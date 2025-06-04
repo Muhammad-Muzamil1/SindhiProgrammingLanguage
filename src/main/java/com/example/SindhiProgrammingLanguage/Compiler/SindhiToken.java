@@ -12,32 +12,34 @@ public class SindhiToken {
      */
     public enum Type {
         // Control structures
-        IF("جيڪڏ"),         // If statement
-        ELSE("پو"),         // Then clause
-        WHILE("جيستائين"),  // While loop
+        IF("جيڪڏ"),
+        ELSE("ته"),
+        ELSE_IF("ته جيڪڏ"),
+        WHILE("جيستائين"),
 
         // I/O
-        PRINT("لکيوَ"),     // Print statement
+        PRINT("لکيوَ"),
 
         // Declaration keywords
-        DECLARE("لک"),     // Variable declaration
-        NUMERIC_TYPE("عددي"), // Numeric type
-        STRING_TYPE("لکت"), // String type
-        DO("ڪر"),           // Do/make action
+        DECLARE("لک"),
+        NUMERIC_TYPE("عددي"),
+        STRING_TYPE("لکت"),
+        DO("ڪر"),
 
         // Literals
-        STRING,             // String literal "..."
-        NUMBER,            // Numeric literal
+        STRING,
+        NUMBER,
 
         // Identifiers
-        IDENTIFIER,        // Variable names
+        IDENTIFIER,
 
         // Operators
-        OPERATOR,          // +, -, *, /, =, ==, <, >, <=, >=, !=, (, )
+        OPERATOR,
+        AND_OPERATOR("۽"),
+        OR_OPERATOR("يا"),
 
         // Special
-        EOF                // End of file
-        ;
+        EOF;
 
         private final String sindhiKeyword;
 
@@ -49,16 +51,10 @@ public class SindhiToken {
             this.sindhiKeyword = sindhiKeyword;
         }
 
-        /**
-         * Returns the Sindhi keyword representation if this type has one.
-         */
         public String getSindhiKeyword() {
             return sindhiKeyword;
         }
 
-        /**
-         * Checks if this type represents a keyword in Sindhi.
-         */
         public boolean isKeyword() {
             return sindhiKeyword != null;
         }

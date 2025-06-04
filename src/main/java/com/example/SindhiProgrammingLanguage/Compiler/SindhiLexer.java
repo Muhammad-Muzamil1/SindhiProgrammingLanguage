@@ -5,35 +5,32 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SindhiLexer {
-    private static final Map<String, SindhiToken.Type> KEYWORDS = Map.of(
-            "لکيوَ", SindhiToken.Type.PRINT,
-            "جيڪڏ", SindhiToken.Type.IF,
-            "پو", SindhiToken.Type.ELSE,
-            "جيستائين", SindhiToken.Type.WHILE,
-            "لک", SindhiToken.Type.DECLARE,
-            "عددي", SindhiToken.Type.NUMERIC_TYPE,
-            "لکت", SindhiToken.Type.STRING_TYPE,
-            "ڪر", SindhiToken.Type.DO
+    private static final Map<String, SindhiToken.Type> KEYWORDS = Map.ofEntries(
+            Map.entry("لکيوَ", SindhiToken.Type.PRINT),
+            Map.entry("جيڪڏ", SindhiToken.Type.IF),
+            Map.entry("ته", SindhiToken.Type.ELSE),
+            Map.entry("ته جيڪڏ", SindhiToken.Type.ELSE_IF),  // New ELSE IF token
+            Map.entry("جيستائين", SindhiToken.Type.WHILE),
+            Map.entry("لک", SindhiToken.Type.DECLARE),
+            Map.entry("عددي", SindhiToken.Type.NUMERIC_TYPE),
+            Map.entry("لکت", SindhiToken.Type.STRING_TYPE),
+            Map.entry("ڪر", SindhiToken.Type.DO),
+            Map.entry("۽", SindhiToken.Type.AND_OPERATOR),
+            Map.entry("يا", SindhiToken.Type.OR_OPERATOR)
     );
-
+    private boolean isSindhiKeyword(String text) {
+        return KEYWORDS.containsKey(text) ||
+                text.equals("لک"); // Handle لک separately
+    }
     private static final Pattern TOKEN_PATTERN = Pattern.compile(
             "\\s*(" +
-                    // Comments (single line)
-                    "//[^\\n]*" +
-                    "|" +
-                    // Keywords
-                    String.join("|", KEYWORDS.keySet()) +
-                    "|" +
-                    // Numeric literals
-                    "\\d+" +
-                    "|" +
-                    // String literals with escape sequences
-                    "\"(?:\\\\[\"\\\\tnr]|[^\"\\\\])*\"" +
-                    "|" +
-                    // Operators and punctuation
-                    "==|!=|<=|>=|[=<>+\\-*/%()]" +
-                    "|" +
-                    // Identifiers (Sindhi + English)
+                    "//[^\\n]*" + "|" +
+                    "\"(?:\\\\[\"\\\\tnr]|[^\"\\\\])*\"" + "|" +
+                    "ته\\s+جيڪڏ|" +  // ELSE IF as single token
+                    String.join("|", KEYWORDS.keySet()) + "|" +
+                    "\\d+" + "|" +
+                    // Add {} to operators
+                    "==|!=|<=|>=|[=<>+\\-*/%(){}]" + "|" +
                     "[\\p{InArabic}a-zA-Z_][\\p{InArabic}a-zA-Z0-9_]*" +
                     ")"
     );
