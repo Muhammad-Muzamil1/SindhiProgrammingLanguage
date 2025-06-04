@@ -42,7 +42,18 @@ public class SindhiInterpreter {
     private String statement() {
         if (match(SindhiToken.Type.OPERATOR, "{")) {
             return block();
+<<<<<<< HEAD
         } else if (match(SindhiToken.Type.PRINT)) {
+=======
+        }
+        if (match(SindhiToken.Type.EOF)) return "";
+
+        SindhiToken current = peek();
+
+        if (current.is(SindhiToken.Type.DECLARE)) {
+            return declaration();
+        } else if (current.is(SindhiToken.Type.PRINT)) {
+>>>>>>> b57bb0301f0bd1780e2dc7706533b340f1319d34
             return print();
         } else if (match(SindhiToken.Type.DECLARE)) {
             return declaration();
@@ -55,7 +66,21 @@ public class SindhiInterpreter {
         }
         throw new RuntimeException("Unknown statement: " + (pos < tokens.size() ? tokens.get(pos) : "EOF"));
     }
+    private String block() {
+        consume(SindhiToken.Type.OPERATOR, "{");
+        StringBuilder output = new StringBuilder();
+        while (!match(SindhiToken.Type.OPERATOR, "}") && !match(SindhiToken.Type.EOF)) {
+            String stmtOutput = statement();
+            if (stmtOutput != null && !stmtOutput.isEmpty()) {
+                output.append(stmtOutput);
+            }
+        }
+        consume(SindhiToken.Type.OPERATOR, "}");
+        return output.toString();
+    }
 
+
+<<<<<<< HEAD
     private String block() {
         consume(SindhiToken.Type.OPERATOR, "{");
         StringBuilder output = new StringBuilder();
@@ -68,6 +93,23 @@ public class SindhiInterpreter {
         consume(SindhiToken.Type.OPERATOR, "}");
         return output.toString();
     }
+=======
+    private String declaration() {
+        consume(SindhiToken.Type.DECLARE); // consume 'لک'
+
+        // Verify we have a type token next
+        if (pos >= tokens.size()) {
+            throw new RuntimeException("Expected type after لک declaration");
+        }
+
+        SindhiToken typeToken = tokens.get(pos);
+        if (!typeToken.is(SindhiToken.Type.NUMERIC_TYPE) &&
+                !typeToken.is(SindhiToken.Type.STRING_TYPE)) {
+            throw new RuntimeException("Expected type (عددي or لکت) after لک, but got " +
+                    typeToken.getType() + " '" + typeToken.getValue() + "'");
+        }
+        pos++; // consume the type token
+>>>>>>> b57bb0301f0bd1780e2dc7706533b340f1319d34
 
 
     private String declaration() {
@@ -77,18 +119,33 @@ public class SindhiInterpreter {
         consume(SindhiToken.Type.OPERATOR, "=");
         Object value = evaluateExpression();
 
-        // Type checking
+        // Type checking and conversion
         if (typeToken.is(SindhiToken.Type.NUMERIC_TYPE)) {
+<<<<<<< HEAD
             if (!(value instanceof Integer)) {
                 try {
                     value = Integer.parseInt(value.toString());
                 } catch (NumberFormatException e) {
                     throw new RuntimeException("Expected number for variable '" + varName + "'");
+=======
+            try {
+                if (value instanceof String) {
+                    value = Integer.parseInt((String)value);
+                } else if (value instanceof Integer) {
+                    // already correct type
+                } else {
+                    throw new RuntimeException("Cannot convert to number: " + value);
+>>>>>>> b57bb0301f0bd1780e2dc7706533b340f1319d34
                 }
+            } catch (NumberFormatException e) {
+                throw new RuntimeException("Expected integer for variable '" + varName + "', got: " + value);
             }
+<<<<<<< HEAD
         }
         else {
             value = value.toString();
+=======
+>>>>>>> b57bb0301f0bd1780e2dc7706533b340f1319d34
         }
 
         variables.put(varName, value);
@@ -251,6 +308,7 @@ public class SindhiInterpreter {
 
         // THEN block
         if (condition) {
+<<<<<<< HEAD
             thenResult = statement();
             // Skip ELSE if present
             if (match(SindhiToken.Type.ELSE)) {
@@ -279,6 +337,24 @@ public class SindhiInterpreter {
                 skipStatement();
                 return handleElseBlocks();
             }
+=======
+            return statement();  // Could be single statement or block
+        } else {
+            skipStatement();
+            return handleElseBlocks();
+        }
+    }
+    private String handleElseBlocks() {
+        if (match(SindhiToken.Type.ELSE_IF)) {
+            consume(SindhiToken.Type.ELSE_IF);
+            boolean elseIfCondition = evaluateBooleanCondition();
+            if (elseIfCondition) {
+                return statement();
+            } else {
+                skipStatement();
+                return handleElseBlocks();
+            }
+>>>>>>> b57bb0301f0bd1780e2dc7706533b340f1319d34
         } else if (match(SindhiToken.Type.ELSE)) {
             consume(SindhiToken.Type.ELSE);
             return statement();
