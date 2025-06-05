@@ -435,5 +435,45 @@ function animateLetters(timestamp) {
   requestAnimationFrame(animateLetters)
 }
 
+document.getElementById("run-btn").addEventListener("click", async () => {
+  const textarea = document.getElementById("code-editor");
+  const resultDiv = document.getElementById("output-console");
+  const runBtn = document.getElementById("run-btn");
+  const apiUrl = "http://localhost:8080/SindhiLanguage/v1";
+
+  const userCode = textarea.value.trim();
+  if (!userCode) {
+    resultDiv.innerText = "مهرباني ڪري ڪوڊ لکو.";
+    return;
+  }
+
+  const payload = { sindhiCode: userCode };
+
+  runBtn.disabled = true;
+  runBtn.innerText = "⏳ لوڊ ٿي رهيو آهي...";
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP Error: ${response.status}`);
+    }
+
+    const resultText = await response.text();
+    resultDiv.innerText = resultText;
+    resultDiv.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  } catch (error) {
+    resultDiv.innerText = "غلطي: " + error.message;
+    console.error("API Error:", error);
+  } finally {
+    runBtn.disabled = false;
+    runBtn.innerText = "هلايو";
+  }
+});
 // Start the animation loop
 requestAnimationFrame(animateLetters)
