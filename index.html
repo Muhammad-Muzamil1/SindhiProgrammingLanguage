@@ -53,8 +53,8 @@
             <div class="editor-layout">
                 <div class="code-panel">
                     <div class="panel-header">ڪوڊ</div>
-                    <textarea id="code-editor" class="code-area" dir="rtl" placeholder="پنهنجو ڪوڊ هتي لکو..."></textarea>
-                </div>
+                    <textarea id="code-editor" class="code-area" style="font-family: 'Nastaliq', 'Noto Sans Arabic'" dir="rtl" placeholder="پنهنجو ڪوڊ هتي لکو..."></textarea>
+                    </div>
                 
                 <div class="output-panel">
                     <div class="panel-header">نتيجو</div>
@@ -96,108 +96,400 @@
                 
                 <div class="docs-section">
                     <h3>بنيادي قاعدا (Syntax)</h3>
-                    <table class="syntax-table">
-                        <tr>
-                            <th>لفظ</th>
-                            <th>مطلب</th>
-                        </tr>
-                        <tr>
-                            <td>لک</td>
-                            <td>نئون ڦرڻو (variable) ٺاهڻ</td>
-                        </tr>
-                        <tr>
-                            <td>عددي</td>
-                            <td>انگ (Integer) قسم</td>
-                        </tr>
-                        <tr>
-                            <td>لڱا</td>
-                            <td>لکت (String) قسم</td>
-                        </tr>
-                        <tr>
-                            <td>جيڪڏ</td>
-                            <td>جيڪڏھن شرط (if)</td>
-                        </tr>
-                        <tr>
-                            <td>نه</td>
-                            <td>نه ته (else)</td>
-                        </tr>
-                        <tr>
-                            <td>ورجاءُ</td>
-                            <td>ورجاٸي (while loop)</td>
-                        </tr>
-                        <tr>
-                            <td>لکيوَ</td>
-                            <td>نتيجو ڏيکارڻ</td>
-                        </tr>
-                        <tr>
-                            <td>پُڇو</td>
-                            <td>يوزر کان معلومات وٺڻ</td>
-                        </tr>
-                    </table>
+  <table class="syntax-table">
+    <thead>
+      <tr>
+        <th>لفظ</th>
+        <th>مطلب</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>لک</td><td>نئون ڦرڻو (variable) ٺاهڻ</td></tr>
+      <tr><td>عددي</td><td>انگ (Integer) قسم</td></tr>
+      <tr><td>لکت</td><td>لکت (String) قسم</td></tr>
+      <tr><td>جيڪڏ</td><td>جيڪڏھن شرط (if)</td></tr>
+      <tr><td>ته جيڪڏ</td><td>جيڪڏھن ٻي شرط (else if)</td></tr>
+      <tr><td>نه</td><td>نه ته (else)</td></tr>
+      <tr><td>جيستائين</td><td>ورجاٸي (while loop)</td></tr>
+      <tr><td>ڪر / جيستائين</td><td>do-while loop</td></tr>
+      <tr><td>لکيوَ</td><td>نتيجو ڏيکارڻ (print)</td></tr>
+      <tr><td>۽</td><td>Logical AND (&&)</td></tr>
+      <tr><td>يا</td><td>Logical OR (||)</td></tr>
+      <tr><td>&lt;, &gt;, &lt;=, &gt;=</td><td>تولڻ وارا آپريٽر (comparison operators)</td></tr>
+      <tr><td>+, -, *, /, %</td><td>رياضي جا آپريٽر</td></tr>
+      <tr><td>+ (Strings)</td><td>لکت کي جوڙڻ (String Concatenation)</td></tr>
+      <tr><td>? :</td><td>ٽرنري آپريٽر (Ternary Operator)</td></tr>
+    </tbody>
+  </table>
                 </div>
                 
                 <div class="docs-section">
-                    <h3>مثالي پروگرام:</h3>
-                    
-                    <div class="example">
-                        <h4>1. عددي ڦرڻو ۽ نتيجو ڏيکارڻ:</h4>
-                        <div class="code-example">
-                            <pre>لک عددي عمر = 22
-لکيوَ عمر</pre>
-                            <div class="example-output">نتيجو: 22</div>
-                        </div>
-                    </div>
-                    
-                    <div class="example">
-                        <h4>2. لڱا ڦرڻو ۽ لکڻ:</h4>
-                        <div class="code-example">
-                            <pre>لک لڱا نالو = "مزمل"
-لکيوَ نالو</pre>
-                            <div class="example-output">نتيجو: مزمل</div>
-                        </div>
-                    </div>
-                    
-                    <div class="example">
-                        <h4>3. جيڪڏھن ۽ نه ته شرط:</h4>
-                        <div class="code-example">
-                            <pre>لک عددي عمر = 18
-جيڪڏ عمر >= 18
-  لکيوَ "توهان بالغ آهيو"
-نه
-  لکيوَ "توهان نابالغ آهيو"</pre>
-                            <div class="example-output">ممڪن نتيجو: توهان بالغ آهيو</div>
-                        </div>
-                    </div>
-                    
-                    <div class="example">
-                        <h4>4. ورجاءُ لوپ جو مثال:</h4>
-                        <div class="code-example">
-                            <pre>لک عددي ڳڻپ = 1
-ورجاءُ ڳڻپ <= 5
-  لکيوَ ڳڻپ
-  ڳڻپ = ڳڻپ + 1</pre>
-                            <div class="example-output">نتيجو:
-1
-2
-3
-4
-5</div>
-                        </div>
-                    </div>
-                    
-                    <div class="example">
-                        <h4>5. پُڇو: يوزر کان معلومات وٺڻ:</h4>
-                        <div class="code-example">
-                            <pre>لک لڱا نالو
-پُڇو "پنھنجو نالو داخل ڪريو:"
-نالو
-لکيوَ "ڀليڪار " + نالو</pre>
-                            <div class="example-output">ممڪن نتيجو:
-پنھنجو نالو داخل ڪريو: مزمل
-ڀليڪار مزمل</div>
-                        </div>
+                  <h3>سنڌي، C، ۽ Java جو تقابلي جائزو</h3>
+  <table class="syntax-table">
+    <thead>
+      <tr>
+        <th>خاصيت / مفهوم</th>
+        <th>سنڌي پروگرامنگ</th>
+        <th>C</th>
+        <th>Java</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ڦرڻو ٺاهڻ</td>
+        <td>لک عددي x = 5</td>
+        <td>int x = 5;</td>
+        <td>int x = 5;</td>
+      </tr>
+      <tr>
+        <td>لکت جو ڦرڻو</td>
+        <td>لک لکت name = "Muhammad Muzamil"</td>
+        <td>char name[] = "Muhammad Muzamil";</td>
+        <td>String name = "Muhammad Muzamil";</td>
+      </tr>
+      <tr>
+        <td>جيڪڏ شرط</td>
+        <td>جيڪڏ (x &gt; 0) { ... }</td>
+        <td>if (x &gt; 0) { ... }</td>
+        <td>if (x &gt; 0) { ... }</td>
+      </tr>
+      <tr>
+        <td>۽ (Logical AND)</td>
+        <td>جيڪڏ (x &gt; 0 ۽ y &lt; 10)</td>
+        <td>if (x &gt; 0 && y &lt; 10)</td>
+        <td>if (x &gt; 0 && y &lt; 10)</td>
+      </tr>
+      <tr>
+        <td>يا (Logical OR)</td>
+        <td>جيڪڏ (x &gt; 0 يا y &lt; 10)</td>
+        <td>if (x &gt; 0 || y &lt; 10)</td>
+        <td>if (x &gt; 0 || y &lt; 10)</td>
+      </tr>
+      <tr>
+        <td>Comparison Operators</td>
+        <td>&lt;, &gt;, &lt;=, &gt;== موجود</td>
+        <td>موجود</td>
+        <td>موجود</td>
+      </tr>
+      <tr>
+        <td>Math Operators</td>
+        <td>+, -, *, /, % موجود</td>
+        <td>موجود</td>
+        <td>موجود</td>
+      </tr>
+      <tr>
+        <td>String Concatenation</td>
+        <td>لکيوَ a + " " + b</td>
+        <td>strcat(a, b); // manual</td>
+        <td>System.out.println(a + " " + b);</td>
+      </tr>
+      <tr>
+        <td>Ternary Operator</td>
+        <td>لکيوَ x &gt; 5 ? "ھا" : "نه"</td>
+        <td>printf("%s", x &gt; 5 ? "Yes" : "No");</td>
+        <td>System.out.println(x &gt; 5 ? "Yes" : "No");</td>
+      </tr>
+      <tr>
+        <td>جيستائين لوپ (While Loop)</td>
+        <td>جيستائين (x &lt; 10) { }</td>
+        <td>while (x &lt; 10) { }</td>
+        <td>while (x &lt; 10) { }</td>
+      </tr>
+        <tr>
+        <td>لوپ (Do-While)</td>
+        <td>ڪر { <br>&nbsp;&nbsp;// statements <br>} جيستائين (x &lt; 10)</td>
+        <td>do { <br>&nbsp;&nbsp;// statements <br>} while (x &lt; 10);</td>
+        <td>do { <br>&nbsp;&nbsp;// statements <br>} while (x &lt; 10);</td>
+    </tr>
+      <tr>
+        <td>اَئوٽ پُٽ</td>
+        <td>لکيوَ("Hello")</td>
+        <td>printf("Hello");</td>
+        <td>System.out.println("Hello");</td>
+      </tr>
+      <tr>
+  <td>تبصرا (Comments)</td>
+  <td>
+// هي هڪ تبصرو آهي  
+// محمد مزمل طرفان پروگرام  
+/* گهڻن لائنن وارو تبصرو */  
+</td>
+  <td>
+// This is a comment  
+// Program by Muhammad Muzamil  
+/* Multi-line comment */  
+</td>
+  <td>
+// This is a comment  
+// Program written by Muhammad Muzamil  
+/* Multi-line comment */  
+</td>
+</tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Sample Program Comparison Section -->
+<div class="docs-section">
+  <h3>مثالي پروگرام: محمد مزمل ۽ حنان جو گڏيل سلام</h3>
+
+  <h4>✅ سنڌي پروگرامنگ</h4>
+  <pre><code>لک لکت a = "محمد مزمل"
+لک لکت b = "حنان"
+لکيوَ a + " ۽ " + b + " جو سلام!"</code></pre>
+
+  <h4>✅ C</h4>
+  <pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char a[] = "Muhammad Muzamil";
+    char b[] = "Hanan";
+    char result[100];
+    
+    strcpy(result, a);
+    strcat(result, " and ");
+    strcat(result, b);
+    strcat(result, " say hello!");
+
+    printf("%s\n", result);
+    return 0;
+}</code></pre>
+
+  <h4>✅ Java</h4>
+  <pre><code>public class Main {
+    public static void main(String[] args) {
+        String a = "Muhammad Muzamil";
+        String b = "Hanan";
+        System.out.println(a + " and " + b + " say hello!");
+    }
+}</code></pre>
+                <h3>مثالي پروگرام:</h3>
+
+                <!-- 1. Variable Declaration -->
+                <div class="example">
+                    <h4>1. عددي ۽ لکت ڦرڻا (5 مثال)</h4>
+                    <div class="code-example">
+                        <pre> //١) عمر پرنٽ ڪرڻ جو پروگرام
+لک عددي عمر = 22
+لکيوَ عمر
+
+//٢)  محمد مزمل جي نالي سان سلام ڪرڻ
+لک لکت نالو = "مزمل"
+لکيوَ "سلام، " + نالو
+
+//٣)  ڊگهائي ۽ ويڪر سان ايراضي ڳولڻ
+لک عددي ڊگهائي = 5
+لک عددي ويڪر = 3
+لکيوَ "ايراضي: " + (ڊگهائي * ويڪر)
+
+//٤)  شهر ۽ ملڪ کي جوڙڻ جو پروگرام
+لک لکت شهر = "ڪراچي"
+لک لکت ملڪ = "پاڪستان"
+لکيوَ شهر + "، " + ملڪ
+
+//٥)  ٻن عددي ڦرڻن جو مجموعو
+لک عددي x = 10
+لک عددي y = 20
+لکيوَ "مجموعو: " + (x + y)</pre>
                     </div>
                 </div>
+
+                <!-- 2. If-Else Conditions -->
+                <div class="example">
+                    <h4>2. جيڪڏ/ته شرطون (5 مثال)</h4>
+                    <div class="code-example">
+                        <pre>//١) اسڪور جي بنياد تي گريڊ ڏيکارڻ
+لک عددي اسڪور = 85
+جيڪڏ اسڪور >= 90 {
+    لکيوَ "عالي"
+} ته جيڪڏ اسڪور >= 80 {
+    لکيوَ "وڏا"
+} ته {
+    لکيوَ "سٺو"
+}
+
+//٢) انگ جو جفت يا فرد هجڻ جانچڻ
+لک عددي نمبر = 7
+جيڪڏ نمبر % 2 == 0 {
+    لکيوَ "جفت"
+} ته {
+    لکيوَ "فرد"
+}
+
+//٣) موسم جي بنياد تي پيغام ڏيکارڻ
+لک لکت موسم = "سرما"
+جيڪڏ موسم == "سرما" {
+    لکيوَ "ٿڌ پوي ٿي"
+} ته جيڪڏ موسم == "گرما" {
+    لکيوَ "گرمي پوي ٿي"
+} ته {
+    لکيوَ "موسم سٺي آهي"
+}
+
+//٤) وقت جي بنياد تي سلام ڏيکارڻ
+لک عددي وقت = 14
+جيڪڏ وقت < 12 {
+    لکيوَ "صبح جو سلام"
+} ته {
+    لکيوَ "شام جو سلام"
+}
+
+//٥) ٻن شرطن کي AND سان جانچڻ
+لک عددي x = 10
+جيڪڏ x > 5 ۽ x < 20 {
+    لکيوَ "شرط پوري ٿي"
+}</pre>
+                    </div>
+                </div>
+
+                <!-- 3. While Loops -->
+                <div class="example">
+                    <h4>3. جيستائين لوپ (5 مثال)</h4>
+                    <div class="code-example">
+                        <pre>//١) ڳڻپ 1 کان 5 تائين
+لک عددي ڳڻپ = 1
+جيستائين ڳڻپ <= 5 {
+    لکيوَ ڳڻپ
+     ڳڻپ = ڳڻپ + 1
+}
+
+//٢) 1 کان 100 تائين عددن جو مجموعو
+لک عددي مجموعو = 0
+لک عددي n = 1
+جيستائين n <= 100 {
+    مجموعو = مجموعو + n
+     n = n + 1
+}
+لکيوَ "1 کان 100 تائين مجموعو: " + مجموعو
+
+//٣) نمبر کي 2 سان ضرب ڪري وڌائڻ
+لک عددي نمبر = 2
+جيستائين نمبر <= 1024 {
+    لکيوَ نمبر
+     نمبر = نمبر * 2
+}
+
+//٤) اسٽار سان مثلث ٺاھڻ
+لک لکت ستارو = "*"
+لک عددي قطار = 1
+جيستائين قطار <= 5 {
+    لکيوَ ستارو
+     ستارو = ستارو + "*"
+     قطار = قطار + 1
+}
+
+//٥) عدد ۾ ڪيترا عدد آهن ڳڻڻ
+لک عددي عدد = 12345
+لک عددي وارو = 0
+جيستائين عدد > 0 {
+     وارو = وارو + 1
+     عدد = عدد / 10
+}
+لکيوَ "رقمن جو تعداد: " + وارو</pre>
+                    </div>
+                </div>
+
+                <!-- 4. Do-While Loops -->
+                <div class="example">
+                    <h4>4. ڪر/جيستائين لوپ (5 مثال)</h4>
+                    <div class="code-example">
+                        <pre>//١) ڳڻپ 5 کان 1 تائين گهٽائڻ
+لک عددي x = 5
+ڪر {
+    لکيوَ x
+     x = x - 1
+} جيستائين x > 0
+
+//٢) ڳڻپ کي 2 جي قدم سان گهٽائڻ
+لک عددي ڳڻپ = 10
+ڪر {
+    لکيوَ ڳڻپ
+     ڳڻپ = ڳڻپ - 2
+} جيستائين ڳڻپ > 0
+
+//٣) ڏنل عدد جي ٽيبل ڏيکارڻ
+لک عددي رينج = 3
+لک عددي i = 1
+ڪر {
+    لکيوَ "ٽيبل جو " + i + " نمبر: " + (رينج * i)
+     i = i + 1
+} جيستائين i <= 10
+
+//٤) 0 کان 2 تائين ڳڻپ ڪرڻ
+لک عددي x = 0
+ڪر {
+    لکيوَ x
+    x = x + 1
+} جيستائين x < 3
+</pre>
+                    </div>
+                </div>
+
+                <!-- 5. Complex Programs -->
+                <div class="example">
+                    <h4>5. مشڪل پروگرام (5 مثال)</h4>
+                    <div class="code-example">
+                        <pre>//١) فيبوناچي سيريز جو پهريون 10 عدد
+لک عددي n = 10
+                            
+لک عددي پھريون = 0
+لک عددي ٻيون = 1
+لک عددي ايندڙ = 0
+
+جيستائين n > 0 {
+    لکيوَ پھريون
+     ايندڙ = پھريون + ٻيون
+     پھريون = ٻيون
+     ٻيون = ايندڙ
+     n = n - 1
+}
+
+//٢) ٽرنري آپريٽر سان شرط جانچڻ
+لک عددي x = 5
+لکيوَ x > 3 ? "ھا" : "نه"
+
+
+//٣) آرمسٽرانگ نمبر جي سڃاڻپ
+لک عددي عدد = 407
+لک عددي اصل = عدد
+لک عددي مجموعو = 0
+جيستائين عدد > 0 {
+    لک عددي رقم = عدد % 10
+     مجموعو = مجموعو + (رقم * رقم * رقم)
+     عدد = عدد / 10
+}
+جيڪڏ مجموعو == اصل {
+    لکيوَ اصل + " آرمسٽرانگ نمبر آهي"
+} ته {
+    لکيوَ اصل + " آرمسٽرانگ نمبر ڪو نه آهي"
+}
+ 
+//٤) 1 کان 100 تائين وزير (Prime) نمبر ڏيکارڻ
+لک عددي شروع = 1
+لک عددي ختم = 100
+لکيوَ "بنائب نمبر:"
+
+جيستائين شروع <= ختم {
+    لک عددي آهي_بنائب = 1
+    لک عددي ڊويزن = 2
+
+    جيستائين ڊويزن < شروع {
+        جيڪڏ شروع % ڊويزن == 0 {
+             آهي_بنائب = 0
+        }
+         ڊويزن = ڊويزن + 1
+    }
+
+    جيڪڏ آهي_بنائب == 1 ۽ شروع > 1 {
+        لکيوَ شروع
+    }
+     شروع = شروع + 1
+}
+</pre>
+                    </div>
+                </div>
+            </div>
                 
                 <div class="docs-section">
                     <h3>خاص خوبيون:</h3>

@@ -293,9 +293,9 @@ function interpretCode(code) {
           if (varNameWithType.includes("عددي")) {
             varType = "number"
             varName = varNameWithType.replace("عددي", "").trim()
-          } else if (varNameWithType.includes("لڱا")) {
+          } else if (varNameWithType.includes("لکت")) {
             varType = "string"
-            varName = varNameWithType.replace("لڱا", "").trim()
+            varName = varNameWithType.replace("لکت", "").trim()
           } else {
             varName = varNameWithType
             // Infer type
@@ -320,8 +320,8 @@ function interpretCode(code) {
           if (varNameWithType.includes("عددي")) {
             const varName = varNameWithType.replace("عددي", "").trim()
             variables[varName] = 0
-          } else if (varNameWithType.includes("لڱا")) {
-            const varName = varNameWithType.replace("لڱا", "").trim()
+          } else if (varNameWithType.includes("لکت")) {
+            const varName = varNameWithType.replace("لکت", "").trim()
             variables[varName] = ""
           }
         }
@@ -475,5 +475,41 @@ document.getElementById("run-btn").addEventListener("click", async () => {
     runBtn.innerText = "هلايو";
   }
 });
+const latifQuotes = [
+    "جي سڄڻ سان نيهه لڳو، تن جو ڪجھ به نه وڃي،<br>جيئن سمنڊ ۾ وهي وڃن، سدائين موتي ٿين",
+    "ٻوليءَ ۾ برڪت آهي، ڀلي پاڻ گهڻو نه ڳالهاءِ",
+    "سادن جي سچ ڳالهه، سونهاري سڌ آڻي",
+    "جيڪو سچيءَ ريت سان ڳالهايو، تنهن جو نالو هميشه زنده",
+    "دل جي ڳالهه لکي وڃ، تن کي عقل اچي",
+    "حڪمت ڳالهيون کوجن، سي ڀانئجن ڪوڙ نه",
+    "ڪلام ۾ علم آهي، علم ۾ نجات آهي",
+    "لکڻ لکائيءَ سان دلين کي سڪون ملي",
+    "جتي بولي پنهنجي، اُتي عزت ٻيڻي",
+    "دل جي اک کلي، ته سچ جي سُڌ پوي",
+    "لفظن جو لوءُ جلاءِ، اُهو ئي علم وارو ٿئي"
+  ];
+
+  let currentIndex = Math.floor(Math.random() * 10);
+  const verseElement = document.querySelector(".verse");
+
+  function showQuoteWithFade() {
+    // Fade out
+    verseElement.style.opacity = 0;
+
+    setTimeout(() => {
+      // Change quote after fade out
+      verseElement.innerHTML = latifQuotes[currentIndex];
+      verseElement.style.opacity = 1; // Fade in
+
+      // Move to next
+      currentIndex = (currentIndex + 1) % latifQuotes.length;
+    }, 1000); // Match CSS transition duration (1s)
+  }
+
+  // Initial display
+  showQuoteWithFade();
+
+  // Every 2 minutes
+  setInterval(showQuoteWithFade, 100000);
 // Start the animation loop
 requestAnimationFrame(animateLetters)
