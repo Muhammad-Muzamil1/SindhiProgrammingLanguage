@@ -10,13 +10,13 @@ import java.util.List;
 @Service
 public class SindhiProgrammingInterpreterServices {
 
-    public String execute(String sindhiCode) throws Exception {
+    public String execute(String code) throws Exception {
+
+
+        code = code.replace("\r\n", "\n").replace('\r', '\n');
 
         SindhiLexer lexer = new SindhiLexer();
-        List<SindhiToken> tokens = lexer.tokenize(sindhiCode);
-        for (SindhiToken token : tokens) {
-            System.out.println(token);
-        }
+        List<SindhiToken> tokens = lexer.tokenize(code);
         SindhiInterpreter interpreter = new SindhiInterpreter(tokens);
         return interpreter.interpret();
     }
