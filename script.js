@@ -439,7 +439,7 @@ document.getElementById("run-btn").addEventListener("click", async () => {
   const textarea = document.getElementById("code-editor");
   const resultDiv = document.getElementById("output-console");
   const runBtn = document.getElementById("run-btn");
-  const apiUrl = "http://localhost:8080/SindhiLanguage/v1";
+  const apiUrl = "https://sindhiprogramminglanguagebackend-production.up.railway.app/SindhiLanguage/v1";
 
   const userCode = textarea.value.trim();
   if (!userCode) {
