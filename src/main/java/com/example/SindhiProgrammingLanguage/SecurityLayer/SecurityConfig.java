@@ -39,15 +39,15 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-
-        config.setAllowedOrigins(List.of("https://tubular-rugelach-ed7c5e.netlify.app/")); // 🛑 Replace with your actual Netlify URL
+        config.setAllowedOrigins(List.of("https://sindhiprogramminglanguage.netlify.app")); // ✅ exact domain
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(true); // ✅ Only enable this if you're using cookies/auth headers
-        config.setMaxAge(Duration.ofHours(1)); // Optional, reduces preflight request load
+        config.setAllowCredentials(true);
+        config.setMaxAge(Duration.ofHours(1));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
     }
+
 }
