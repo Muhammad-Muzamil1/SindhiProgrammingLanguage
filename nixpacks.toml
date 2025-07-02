@@ -1,0 +1,5 @@
+[phases.setup]
+nixpkgs = ["openjdk21", "maven"]
+
+[variables]
+JAVA_HOME = "/nix/var/nix/profiles/default"
