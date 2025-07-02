@@ -434,7 +434,15 @@ function animateLetters(timestamp) {
 
   requestAnimationFrame(animateLetters)
 }
-
+document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const code = btn.nextElementSibling.innerText;
+                navigator.clipboard.writeText(code).then(() => {
+                    btn.innerText = '✅  نقل ٿي ويو ';
+                    setTimeout(() => btn.innerText = '📋 نقل', 1500);
+                });
+            });
+        });
 document.getElementById("run-btn").addEventListener("click", async () => {
   const textarea = document.getElementById("code-editor");
   const resultDiv = document.getElementById("output-console");
