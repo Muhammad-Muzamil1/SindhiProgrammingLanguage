@@ -1,0 +1,15 @@
+# =============================
+# Latif Ji Boli Robots Policy
+# =============================
+
+User-agent: *
+Allow: /
+
+# Sitemap location (important for crawlers)
+Sitemap: https://latifjiboli.app/sitemap.xml
+
+# Primary domain (for search engines that use it)
+Host: https://latifjiboli.app/
+
+# Optional Crawl Delay (keeps bots polite if you add APIs later)
+# Crawl-delay: 10
