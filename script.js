@@ -447,7 +447,7 @@ document.getElementById("run-btn").addEventListener("click", async () => {
   const textarea = document.getElementById("code-editor");
   const resultDiv = document.getElementById("output-console");
   const runBtn = document.getElementById("run-btn");
-  const apiUrl = "https://api.latifjiboli.app:8443/SindhiLanguage/v1";
+  const apiUrl = "https://api.latifjiboli.app/SindhiLanguage/v1";
 
   const userCode = textarea.value.trim();
   if (!userCode) {
